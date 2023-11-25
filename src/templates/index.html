@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Plotly with FastAPI</title>
+    <!-- Подключение стилей Plotly -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Your Plot Title</h1>
+
+    <!-- Вставка HTML кода графика в безопасном режиме -->
+    {% for plot in plot_html %}
+        {{ plot | safe }}
+    {% endfor %}
+</body>
+</html>
