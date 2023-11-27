@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Some analytics</title>
+    <title>Start page</title>
     <!-- Подключение стилей Plotly -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
@@ -14,15 +14,14 @@
             <button onclick="document.location='/uploadfile'">Upload file</button>
         </ul>
     </nav>
-    <a href="{{ url_for('download_csv', file_id=file_id) }}" download="{{ file_id }}.csv">
-        <button>Download CSV</button>
-    </a>
-    <a href="{{ url_for('download_png', file_id=file_id) }}" download="{{ file_id }}.png">
-        <button>Download PNG</button>
-    </a>
-    <h1>Database test results #{{file_id}}</h1>
-    {% for plot in plot_html %}
-        {{ plot | safe }}
-    {% endfor %}
+    <nav aria-label="...">
+        <h3>Choose test results</h3>
+        <ul class="pagination">
+            {% for file_id in show_file_ids %}
+                <a href="/files/{{file_id[0]}}/">{{file_id[0]}}
+                </a>
+            {% endfor %}
+        </ul>
+      </nav>
 </body>
 </html>
