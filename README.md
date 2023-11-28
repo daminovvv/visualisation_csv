@@ -1,6 +1,6 @@
 # Visualisation CSV
 
-![example workflow](https://github.com/daminovvv/visualisation_csv/actions/workflows/main.yaml/badge.svg)
+![example workflow](https://github.com/daminovvv/visualisation_csv/actions/workflows/main.yml/badge.svg)
 
 ---
 ## Описание
