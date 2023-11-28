@@ -1,10 +1,12 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Base
+from src.models import Base
 
 
-engine = create_engine('postgresql://postgres:postgres@localhost/visualisation_db')
+engine = create_engine(os.getenv("POSTGRES_URL"))
 Base.metadata.create_all(bind=engine)
 
 Session = sessionmaker(bind=engine)

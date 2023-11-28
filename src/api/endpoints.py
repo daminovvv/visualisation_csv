@@ -2,9 +2,9 @@ from fastapi import Request, Depends, APIRouter, UploadFile
 from fastapi.templating import Jinja2Templates
 from starlette.responses import HTMLResponse, StreamingResponse
 
-from api.crud import create_csv_file, get_all_files_id, retrieve_csv_content
-from utils import plot_html_from_csv_string, png_bytes_from_csv_string
-from database import get_session, Session
+from src.api.crud import create_csv_file, get_all_files_id, retrieve_csv_content
+from src.utils import plot_html_from_csv_string, png_bytes_from_csv_string
+from src.database import get_session, Session
 
 router = APIRouter()
 templates = Jinja2Templates(directory="src/templates")
@@ -33,8 +33,9 @@ def upload_file_page(request: Request, file: UploadFile, session: Session = Depe
         "index.html",
         {
             "request": request,
+            "file_id": None,
             "plot_html": plot_html_from_csv_string(csv_content),
-            "file_id": None
+            "created_at": "just now"
         }
     )
 
@@ -42,14 +43,15 @@ def upload_file_page(request: Request, file: UploadFile, session: Session = Depe
 @router.get("/files/{file_id}/", response_class=HTMLResponse)
 def retrieve_test_results(file_id: int, request: Request, session: Session = Depends(get_session)):
     """Provides plots by file_id"""
-    csv_content = retrieve_csv_content(session=session, file_id=file_id)
+    csv_dict = retrieve_csv_content(session=session, file_id=file_id)
 
     return templates.TemplateResponse(
         "index.html",
         {
             "request": request,
             "file_id": file_id,
-            "plot_html": plot_html_from_csv_string(csv_content),
+            "plot_html": plot_html_from_csv_string(csv_dict["content"]),
+            "created_at": csv_dict["description"]["created_at"]
         }
     )
 
@@ -57,8 +59,8 @@ def retrieve_test_results(file_id: int, request: Request, session: Session = Dep
 @router.get("/download_csv/{file_id}", response_class=StreamingResponse)
 def download_csv(file_id: str, session: Session = Depends(get_session)):
     """Sends plot data in CSV format to user"""
-    csv_content = retrieve_csv_content(session=session, file_id=file_id)
-    csv_bytes = csv_content.encode("utf-8")
+    csv_dict = retrieve_csv_content(session=session, file_id=file_id)
+    csv_bytes = csv_dict["content"].encode("utf-8")
     response = StreamingResponse(iter([csv_bytes]), media_type="text/csv")
     response.headers["Content-Disposition"] = f"attachment; filename={file_id}.csv"
     return response
@@ -67,8 +69,8 @@ def download_csv(file_id: str, session: Session = Depends(get_session)):
 @router.get("/download_png/{file_id}", response_class=StreamingResponse)
 def download_png(file_id: str, session: Session = Depends(get_session)):
     """Sends plot figure in png format to user"""
-    csv_content = retrieve_csv_content(session=session, file_id=file_id)
-    png_bytes = png_bytes_from_csv_string(csv_content)
+    csv_dict = retrieve_csv_content(session=session, file_id=file_id)
+    png_bytes = png_bytes_from_csv_string(csv_dict["content"])
     response = StreamingResponse(iter([png_bytes]), media_type="image/png")
     response.headers["Content-Disposition"] = f"attachment; filename={file_id}.png"
     return response

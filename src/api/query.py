@@ -1,6 +1,8 @@
+from datetime import datetime
+
 from sqlalchemy import Select, select, insert
 
-from models import CSVFile
+from src.models import CSVFile
 
 
 def get_all_id_query() -> Select:
@@ -21,7 +23,8 @@ def retrieve_query(file_id: int) -> Select:
 
 
 def create_csv_file_query(name, content):
-    description = {"description": "csv"}
+    description = {"created_at": datetime.utcnow().strftime("%Y-%m-%d"),
+                   "file_format": "csv"}
     query = insert(CSVFile).values(
         name=name,
         content=content,

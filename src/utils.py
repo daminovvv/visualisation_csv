@@ -11,8 +11,8 @@ def figures_from_csv_string(csv_string: str) -> list | None:
     df.columns = df.columns.str.strip('"')
 
     figures = [px.scatter(df, x='client', y='tps', title='tps(client)'),
-               px.scatter(df, x='client', y='tps', title='latency(client)'),
-               px.scatter(df, x='client', y='tps', title='stddev(client)')]
+               px.scatter(df, x='client', y='latency', title='latency(client)'),
+               px.scatter(df, x='client', y='stddev', title='stddev(client)')]
 
     return figures
 

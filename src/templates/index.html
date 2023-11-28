@@ -20,7 +20,7 @@
     <a href="{{ url_for('download_png', file_id=file_id) }}" download="{{ file_id }}.png">
         <button>Download PNG</button>
     </a>
-    <h1>Database test results #{{file_id}}</h1>
+    <h1>Database test results #{{file_id}}. Loaded: {{created_at}}</h1>
     {% for plot in plot_html %}
         {{ plot | safe }}
     {% endfor %}

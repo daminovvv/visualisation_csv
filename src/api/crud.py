@@ -1,4 +1,4 @@
-from api.query import get_all_id_query, create_csv_file_query, retrieve_query
+from src.api.query import get_all_id_query, create_csv_file_query, retrieve_query
 
 
 def get_all_files_id(session):
@@ -7,12 +7,11 @@ def get_all_files_id(session):
     return data.all()
 
 
-def retrieve_csv_content(session, file_id):
+def retrieve_csv_content(session, file_id) -> dict:
     query = retrieve_query(file_id=file_id)
     data = session.execute(query)
     csv_row = data.first()
-    csv_dict = csv_row._asdict()
-    return csv_dict["content"]
+    return csv_row._asdict()
 
 
 def create_csv_file(session, name, content):
