@@ -22,12 +22,6 @@ def retrieve_query(file_id: int) -> Select:
     return query
 
 
-def create_csv_file_query(name, content):
-    description = {"created_at": datetime.utcnow().strftime("%Y-%m-%d"),
-                   "file_format": "csv"}
-    query = insert(CSVFile).values(
-        name=name,
-        content=content,
-        description=description
-    )
+def create_csv_file_query(csv_dict):
+    query = insert(CSVFile).values(**csv_dict).returning(CSVFile.id)
     return query

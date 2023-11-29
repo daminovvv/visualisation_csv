@@ -14,7 +14,8 @@ def retrieve_csv_content(session, file_id) -> dict:
     return csv_row._asdict()
 
 
-def create_csv_file(session, name, content):
-    query = create_csv_file_query(name, content)
-    session.execute(query)
+def create_csv_file(session, csv_dict):
+    query = create_csv_file_query(csv_dict)
+    data = session.execute(query)
     session.commit()
+    return data.first()
