@@ -1,11 +1,12 @@
 # Visualisation CSV
 
-![example workflow](https://github.com/daminovvv/visualisation_csv/actions/workflows/main.yaml/badge.svg)
+![example workflow](https://github.com/daminovvv/visualisation_csv/actions/workflows/main.yml/badge.svg)
 
 ---
 ## Описание
 Приложение позволяет создавать графики из csv файлов с помощью plotly. Загруженные файлы хранятся в БД, можно получить графики по айди документа. 
 Есть поддержка Apache ECharts. Добавлена возможность экспорта графиков в формате png и данных в формате csv.
+При запуске БД заполняется 1 файлом из data/
 
 ## Стек
 FastAPI, SQLAlchemy, Alembic, Postgres, Plotly, Jinja2
