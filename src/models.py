@@ -9,5 +9,5 @@ class CSVFile(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
-    content = Column(Text)  # Используйте Text для хранения содержимого CSV файла
-    description = Column(JSON)  # Используйте JSON для хранения расширенных метаданных в формате JSON
+    content = Column(Text)
+    description = Column(JSON)

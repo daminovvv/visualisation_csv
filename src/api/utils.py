@@ -14,6 +14,9 @@ def figures_from_csv_string(csv_dict: dict) -> list | None:
     df = pd.read_csv(StringIO(csv_dict["content"]), sep=';', quoting=3)
     df.columns = df.columns.str.strip('"')
     columns = csv_dict["description"]["columns"]
+    df[columns[0]] = df[columns[0]].str.replace('"', '').astype(float)
+    for column in columns[1:]:
+        df[column] = df[column].str.replace(',', '.').astype(float)
     figures = [px.scatter(df, x=columns[0], y=columns[i],
                           title=f'{columns[i]}({columns[0]})') for i in range(1, len(columns))]
     return figures
