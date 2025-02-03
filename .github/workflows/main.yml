@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout repository
@@ -15,8 +15,10 @@ jobs:
 
       - name: Set up Docker Compose
         run: |
-          sudo apt-get install -y docker-compose-plugin
+          sudo apt-get install -y docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+
 
       - name: Build and Deploy
         run: |
-          docker compose up -d
+          docker-compose up -d
