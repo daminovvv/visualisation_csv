@@ -15,10 +15,8 @@ jobs:
 
       - name: Set up Docker Compose
         run: |
-          sudo apt-get install -y docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-
+          sudo apt-get install -y docker-compose-plugin
 
       - name: Build and Deploy
         run: |
-          docker-compose up -d
+          docker compose up -d
