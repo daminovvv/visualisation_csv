@@ -18,7 +18,7 @@ FastAPI, SQLAlchemy, Alembic, Postgres, Plotly, Jinja2
 
 #### 1. Клонирование репозитория
 ```
-git clone https://github.com/daminovvv/game-of-life.git
+git clone https://github.com/daminovvv/visualisation_csv.git
 ```
 
 
